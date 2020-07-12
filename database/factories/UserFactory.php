@@ -29,7 +29,11 @@ $factory->define(User::class, function (Faker $faker) {
 
 $factory->state(\App\User::class, 'admin', function (\Faker\Generator $faker) {
     return [
+      'name' => 'Admin',
+      'email' => 'admin.myvote@gmail.com',
+      'password' => Hash::make('softwareteamproject'),
       'role' => 0,
+      'active' => true,
     ];
   });
 

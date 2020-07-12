@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
-use Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
-use Image;
+use Illuminate\Http\Request;
 
-class ManifestoController extends Controller
+class ApproveController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +14,8 @@ class ManifestoController extends Controller
      */
     public function index()
     {
-        return view('manifesto');
+        $users = User::where('active', false)->get();
+        return view('approveUser', compact('users'));
     }
 
     /**
@@ -28,7 +25,7 @@ class ManifestoController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -45,10 +42,10 @@ class ManifestoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         //
     }
@@ -56,10 +53,10 @@ class ManifestoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
         //
     }
@@ -68,28 +65,22 @@ class ManifestoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request  $request, User $approval)
     {
-        $data = request()->validate([
-            'manifesto'=> 'required',
-        ]);
-
-        $user = Auth::user();
-        $user->manifesto = $data['manifesto'];
-        $user->update();
-        return redirect()->back();
+        $approval->update(['active' => true]);
+        return redirect()->route('approval.index')->withMessage('User approved successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
         //
     }

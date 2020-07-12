@@ -3,7 +3,7 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
-        <li class="nav-item has-treeview menu-open">
+        <li class="nav-item">
 
             @if (Auth::user()->role == 0)
             <a href="/admin" class="nav-link">
@@ -18,18 +18,29 @@
                     </a>
         </li>
 
-        @if (Auth::user()->role == 0)
+        @if (Auth::user()->role == 'Admin')
         <li class="nav-item">
             <a href="{{route('users.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>
-                    Managing User
+                    Managing Users
                 </p>
             </a>
         </li>
         @endif
 
-        @if (Auth::user()->role == 1)
+        @if (Auth::user()->role == 'Admin')
+        <li class="nav-item">
+            <a href="{{route('approval.index')}}" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>
+                    Approve New Users
+                </p>
+            </a>
+        </li>
+        @endif
+
+        @if (Auth::user()->role == 'Candidate')
         <li class="nav-item">
             <a href="{{route('manifesto.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
@@ -40,7 +51,7 @@
         </li>
         @endif
 
-        @if (Auth::user()->role == 1 || Auth::user()->role == 2)
+
         <li class="nav-item">
             <a href="{{route('candidate_list.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-tree"></i>
@@ -49,7 +60,7 @@
                 </p>
             </a>
         </li>
-        @endif
+
 
 
 
